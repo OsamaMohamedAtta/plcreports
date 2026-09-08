@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" id="metaDescription"
+    content="PLC Vehicle Report — vehicle details, VIN information and available photo records.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#ffffff">
+  <title id="pageTitle">Vehicle Report | PLC</title>
+  <link rel="canonical" id="canonical" href="https://YOUR-DOMAIN.com/vehicle.html">
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --soft: #f7f8fa;
+      --accent: #111827;
+      --green: #047857
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #fff
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: auto;
+      padding: 0 22px
+    }
+
+    header {
+      height: 76px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 20
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 25px;
+      letter-spacing: -1.5px
+    }
+
+    .logo span {
+      font-weight: 500;
+      color: #9ca3af
+    }
+
+    .back {
+      font-size: 14px;
+      color: var(--muted);
+      margin-left: 20px;
+    }
+
+    main {
+      padding: 38px 0 80px
+    }
+
+    .breadcrumbs {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 24px;
+      margin-top: 14px
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fff
+    }
+
+    .hero-top {
+      padding: 30px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      align-items: flex-start
+    }
+
+    .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #9ca3af;
+      font-weight: 800
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -1.8px;
+      margin: 8px 0
+    }
+
+    .vin {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: #6b7280;
+      font-size: 13px;
+      word-break: break-all
+    }
+
+    .status {
+      white-space: nowrap;
+      padding: 8px 11px;
+      border: 1px solid #d1fae5;
+      background: #ecfdf5;
+      color: var(--green);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr
+    }
+
+    .item {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .item:nth-child(odd) {
+      border-right: 1px solid var(--line)
+    }
+
+    .item span {
+      display: block;
+      color: #9ca3af;
+      font-size: 12px;
+      margin-bottom: 6px
+    }
+
+    .item strong {
+      font-size: 16px
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      margin-top: 24px
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden
+    }
+
+    .panel-head {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .panel-head h2 {
+      font-size: 19px;
+      margin: 0 0 5px
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .photos {
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px
+    }
+
+    .photo {
+      aspect-ratio: 4/3;
+      background: #f3f4f6;
+      border-radius: 12px;
+      overflow: hidden
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .no-photo {
+      padding: 50px 20px;
+      text-align: center;
+      color: #9ca3af;
+      font-size: 14px
+    }
+
+    .ad-slot {
+      min-height: 250px;
+      border: 1px dashed #d1d5db;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 12px;
+      background: #fcfcfc;
+      margin-bottom: 20px
+    }
+
+    .upgrade {
+      border: 1px solid #111827;
+      border-radius: 18px;
+      padding: 24px;
+      background: #111827;
+      color: #fff;
+      position: sticky;
+      top: 100px
+    }
+
+    .upgrade h2 {
+      font-size: 21px;
+      margin: 0 0 8px
+    }
+
+    .upgrade p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 20px
+    }
+
+    .price {
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 17px
+    }
+
+    .price small {
+      font-size: 13px;
+      font-weight: 500;
+      color: #9ca3af
+    }
+
+    .buy {
+      display: block;
+      text-align: center;
+      background: #fff;
+      color: #111827;
+      border-radius: 11px;
+      padding: 13px;
+      font-weight: 800
+    }
+
+    .fine {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 12px;
+      line-height: 1.5
+    }
+
+    .error {
+      text-align: center;
+      padding: 100px 20px
+    }
+
+    .error h1 {
+      font-size: 36px;
+      margin: 0 0 10px
+    }
+
+    .error p {
+      color: var(--muted)
+    }
+
+    .error a {
+      text-decoration: underline
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: #9ca3af;
+      font-size: 13px
+    }
+
+    @media(max-width:800px) {
+      .content-grid {
+        grid-template-columns: 1fr
+      }
+
+      .upgrade {
+        position: static
+      }
+
+      .hero-top {
+        padding: 24px;
+        flex-direction: column
+      }
+
+      .grid {
+        grid-template-columns: 1fr
+      }
+
+      .item:nth-child(odd) {
+        border-right: 0
+      }
+
+      .photos {
+        grid-template-columns: 1fr
+      }
+
+      .ad-slot {
+        min-height: 120px
+      }
+    }
+  </style>
+</head>
+
+<!-- Support Button -->
+<a href="https://t.me/plc_reports" target="_blank" rel="noopener noreferrer" class="support-button"
+  aria-label="Contact Support">
+  <span class="support-icon">🎧</span>
+  <span class="support-text">Contact Support</span>
+</a>
+
+<style>
+  .support-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+
+    padding: 13px 18px;
+    border-radius: 50px;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease;
+  }
+
+  .support-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  }
+
+  .support-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .support-text {
+    white-space: nowrap;
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .support-button {
+      bottom: 15px;
+      right: 15px;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .support-text {
+      display: none;
+    }
+
+    .support-icon {
+      font-size: 21px;
+    }
+  }
+</style>
+
+<body>
+  <header>
+    <div class="wrap nav"><a class="logo" href="./">PLC<span> Reports</span></a><a class="back" href="./">← Search
+        another VIN</a></div>
+  </header>
+
+  <main class="wrap" id="app">
+    <div class="breadcrumbs"><a href="./">Home</a> / Vehicle Report</div>
+    <div class="ad-slot">Advertisement</div>
+    <div id="loading" style="padding:80px;text-align:center;color:#9ca3af">Loading vehicle report…</div>
+  </main>
+
+  <footer>
+    <div class="wrap">© 2020 PLC Reports · Vehicle information is provided as available in our records.</div>
+  </footer>
+
+  <script>
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1EJTOViLkbd6RV3pYPorX3_N7QpQYkqb76OmWM08iT8M/gviz/tq?tqx=out:csv&gid=0";
+    const FULL_REPORT_URL = "https://t.me/plc_reports"; // Put your checkout/payment URL here.
+    const app = document.getElementById("app");
+
+    function normalizeVIN(v) { return String(v || "").trim().toUpperCase().replace(/\s+/g, "") }
+    function escapeHTML(v) { return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m])) }
+    function parseCSV(text) {
+      const rows = []; let row = [], cell = "", quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i], n = text[i + 1];
+        if (c === '"' && quoted && n === '"') { cell += '"'; i++; continue }
+        if (c === '"') { quoted = !quoted; continue }
+        if (c === ',' && !quoted) { row.push(cell); cell = ""; continue }
+        if ((c === '\n' || c === '\r') && !quoted) { if (c === '\r' && n === '\n') i++; row.push(cell); cell = ""; if (row.some(x => x.trim())) rows.push(row); row = []; continue }
+        cell += c;
+      }
+      if (cell.length || row.length) { row.push(cell); rows.push(row) }
+      if (!rows.length) return [];
+      const headers = rows.shift().map(x => x.trim());
+      return rows.map(r => Object.fromEntries(headers.map((h, i) => [h, (r[i] || "").trim()])));
+    }
+    async function getVehicle(vin) {
+      const res = await fetch(SHEET_CSV_URL, { cache: "no-store" }); if (!res.ok) throw new Error();
+      return parseCSV(await res.text()).find(r => normalizeVIN(r["VIN"]) === vin);
+    }
+    function photoList(v) {
+      const urls = [v.Photo1, v.Photo2, v.Photo3, v.Photo4].map(x => String(x || "").trim()).filter(Boolean);
+      return [...new Set(urls)];
+    }
+    function display(v, key, fallback = "Not available") { return v[key] ? escapeHTML(v[key]) : fallback }
+
+    async function render() {
+      const vin = normalizeVIN(new URLSearchParams(location.search).get("id"));
+      if (!vin) { showError("No VIN was provided.", "Please return to the search page and enter a VIN."); return }
+      if (SHEET_CSV_URL === "YOUR_GOOGLE_SHEET_CSV_URL") { showError("Site configuration needed.", "Connect your Google Sheet CSV URL in vehicle.html."); return }
+      try {
+        const v = await getVehicle(vin);
+        if (!v) { showError("Vehicle not found.", "We couldn't find a matching vehicle record for this VIN."); return }
+        const name = v["Motors Name"] || "Vehicle";
+        const model = v["Model"] || "";
+        const title = `${name} ${model} | VIN ${vin} | PLC Vehicle Report`;
+        document.title = title;
+        document.getElementById("metaDescription").content = `View the PLC vehicle report for ${name} ${model}, including available vehicle specifications, mileage, VIN and photo records.`;
+        document.getElementById("canonical").href = location.href;
+
+        const photos = photoList(v);
+        app.innerHTML = `
+        <div class="breadcrumbs"><a href="./">Home</a> / Vehicle Report / ${escapeHTML(vin)}</div>
+        <section class="hero-card">
+          <div class="hero-top">
+            <div><div class="label">PLC Vehicle Report</div><h1 class="hero-title">${escapeHTML(name)}</h1><div class="vin">VIN: ${escapeHTML(vin)}</div></div>
+            <div class="status">Record found</div>
+          </div>
+          <div class="grid">
+            <div class="item"><span>Make / Vehicle</span><strong>${display(v, "Motors Name")}</strong></div>
+            <div class="item"><span>Model / Year</span><strong>${display(v, "Model")}</strong></div>
+            <div class="item"><span>Color</span><strong>${display(v, "Colors")}</strong></div>
+            <div class="item"><span>Mileage</span><strong>${display(v, "KM")}</strong></div>
+            <div class="item"><span>Engine</span><strong>${display(v, "Engine")}</strong></div>
+            <div class="item"><span>Lot Number</span><strong>${display(v, "LotNumber")}</strong></div>
+            <div class="item" style="grid-column:1/-1"><span>VIN</span><strong style="font-family:ui-monospace,monospace">${escapeHTML(vin)}</strong></div>
+          </div>
+        </section>
+
+        <div class="content-grid">
+          <div>
+            <section class="panel">
+              <div class="panel-head"><h2>Available vehicle photos</h2><p>Photos shown below are the images available in the current record.</p></div>
+              ${photos.length ? `<div class="photos">${photos.map((p, i) => `<div class="photo"><img src="${escapeHTML(p)}" alt="${escapeHTML(name)} ${escapeHTML(model)} vehicle photo ${i + 1}" loading="${i === 0 ? "eager" : "lazy"}" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'"></div>`).join("")}</div>` : `<div class="no-photo">No photos are available for this vehicle.</div>`}
+            </section>
+          </div>
+          <aside>
+            <div class="ad-slot">Advertisement</div>
+            <div class="upgrade">
+              <h2>Get the Full Report</h2>
+              <p>Unlock the complete report for this vehicle and access the additional information available for purchase.</p>
+              <div class="price">$150 <small>one-time</small></div>
+              <a class="buy" href="${FULL_REPORT_URL}" target="_blank" rel="noopener">Get Full Report</a>
+              <div class="fine">Payment and report delivery are handled through the checkout configured by PLC.</div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="ad-slot" style="margin-top:24px">Advertisement</div>
+      `;
+
+        // Basic structured data for search engines.
+        const ld = document.createElement("script"); ld.type = "application/ld+json";
+        ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Product", "name": `${name} ${model} Vehicle Report`, "description": document.getElementById("metaDescription").content, "url": location.href });
+        document.head.appendChild(ld);
+      } catch (e) { showError("Unable to load the report.", "Please try again later.") }
+    }
+    function showError(title, text) { app.innerHTML = `<div class="error"><h1>${escapeHTML(title)}</h1><p>${escapeHTML(text)}</p><p><a href="./">← Return to VIN search</a></p></div>` }
+    render();
+  </script>
+</body>
+
+</html>
