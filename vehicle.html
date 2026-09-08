@@ -9,7 +9,7 @@
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#ffffff">
   <title id="pageTitle">Vehicle Report | PLC</title>
-  <link rel="canonical" id="canonical" href="https://YOUR-DOMAIN.com/vehicle.html">
+  <link rel="canonical" id="canonical" href="https://plcreports.report/vehicle.html">
   <style>
     :root {
       --ink: #111827;
@@ -74,6 +74,7 @@
       font-size: 14px;
       color: var(--muted);
       margin-left: 20px;
+      margin-top: 9px;
     }
 
     main {
@@ -426,8 +427,16 @@
   </main>
 
   <footer>
-    <div class="wrap">© 2020 PLC Reports · Vehicle information is provided as available in our records.</div>
-  </footer>
+    <div class="wrap"><div>© 2020 PLC Reports · Vehicle information is provided as available in our records.</div><div class="footer-links">
+<a href="./about.html">About</a>
+<a href="./contact.html">Contact</a>
+<a href="./privacy-policy.html">Privacy Policy</a>
+<a href="./terms.html">Terms of Service</a>
+</div></div>
+  </footer><style>
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.footer-links a{color:#6b7280}.footer-links a:hover{color:#111827;text-decoration:underline}
+</style>
 
   <script>
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1EJTOViLkbd6RV3pYPorX3_N7QpQYkqb76OmWM08iT8M/gviz/tq?tqx=out:csv&gid=0";
