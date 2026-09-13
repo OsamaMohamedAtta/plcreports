@@ -547,7 +547,7 @@
 
         // Basic structured data for search engines.
         const ld = document.createElement("script"); ld.type = "application/ld+json";
-        ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Product", "name": `${name} ${model} Vehicle Report`, "description": document.getElementById("metaDescription").content, "url": location.href });
+        ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "WebPage", "name": `${name} ${model} Vehicle Report`, "description": document.getElementById("metaDescription").content, "url": location.href });
         document.head.appendChild(ld);
       } catch (e) { showError("Unable to load the report.", "Please try again later.") }
     }
